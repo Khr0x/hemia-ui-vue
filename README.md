@@ -26,7 +26,7 @@ npx hemia add button
 ## Monorepo Structure
 
 ```
-hemia-ui-vue/
+hemia-ui/
 ├── apps/
 │   ├── web/         # Vue 3 playground
 │   └── docs/        # VitePress docs
@@ -35,4 +35,17 @@ hemia-ui-vue/
 │   ├── vue/         # @hemia/vue
 │   ├── registry/    # @hemia/registry
 │   └── cli/         # @hemia/cli
+```
+
+# web
+```bash
+cd apps/web
+pnpm dev          # Solo el playground
+```
+
+# Docs
+```bash
+cd apps/docs
+pnpm dev          # Servidor de desarrollo de docs
+pnpm build        # Build para producción (deploy)
 ```

@@ -1,9 +1,10 @@
 {
-  "name": "@hemia/cli",
+  "name": "hemia-ui",
   "version": "0.0.1",
   "type": "module",
   "bin": {
-    "hemia": "./dist/index.js"
+    "hemia": "./dist/index.js",
+    "hemia-ui": "./dist/index.js"
   },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",
