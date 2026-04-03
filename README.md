@@ -1,19 +1,38 @@
-# @hemia/ui-vue
+# @hemia/ui
 
-A shadcn-inspired component generator for Vue 3 + Tailwind CSS.
+A shadcn-inspired, **multi-framework**, local-first component generator.
+
+> Components are copied into your project — not imported from npm.
 
 ## Packages
 
-- `@hemia/ui-vue` – runtime, tokens, generator utilities
-- `@hemia/ui-registry` – component templates
-- `@hemia/cli` – CLI to add components to your project
+| Package | Version | Description |
+|---|---|---|
+| `@hemia/core` | 0.0.1 | Runtime, tokens (framework-agnostic) |
+| `@hemia/vue` | 0.0.1 | Vue 3 components |
+| `@hemia/registry` | 0.0.1 | Component templates |
+| `@hemia/cli` | 0.0.1 | Universal CLI |
 
-## Usage
+## Quick Start (Vue)
 
 ```bash
-pnpm add @hemia/ui-vue
+pnpm add @hemia/vue
 pnpm add -D @hemia/cli
 
 npx hemia init
 npx hemia add button
+```
+
+## Monorepo Structure
+
+```
+hemia-ui-vue/
+├── apps/
+│   ├── web/         # Vue 3 playground
+│   └── docs/        # VitePress docs
+├── packages/
+│   ├── core/        # @hemia/core
+│   ├── vue/         # @hemia/vue
+│   ├── registry/    # @hemia/registry
+│   └── cli/         # @hemia/cli
 ```

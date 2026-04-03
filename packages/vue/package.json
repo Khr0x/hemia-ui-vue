@@ -1,5 +1,5 @@
 {
-  "name": "@hemia/ui-vue",
+  "name": "@hemia/vue",
   "version": "0.0.1",
   "type": "module",
   "exports": {
@@ -15,9 +15,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "clsx": "^2.1.0",
-    "tailwind-merge": "^2.3.0",
-    "class-variance-authority": "^0.7.0"
+    "@hemia/core": "workspace:*"
   },
   "devDependencies": {
     "vue": "^3.4.0",

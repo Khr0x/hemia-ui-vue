@@ -7,10 +7,11 @@
   },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",
-    "dev": "tsup src/index.ts --format esm --dts --watch"
+    "dev": "tsup src/index.ts --format esm --watch"
   },
   "dependencies": {
-    "@hemia/ui-registry": "workspace:*",
+    "@hemia/core": "workspace:*",
+    "@hemia/registry": "workspace:*",
     "commander": "^12.0.0",
     "fs-extra": "^11.0.0",
     "picocolors": "^1.0.0",

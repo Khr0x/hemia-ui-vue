@@ -2,8 +2,8 @@
 layout: home
 
 hero:
-  name: "@hemia/ui-vue"
-  text: "A shadcn-inspired UI system for Vue 3"
+  name: "@hemia/ui"
+  text: "A shadcn-inspired, multi-framework UI system"
   tagline: Local-first. CLI-driven. Themeable.
   actions:
     - theme: brand

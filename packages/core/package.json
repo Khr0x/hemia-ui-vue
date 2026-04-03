@@ -1,0 +1,27 @@
+{
+  "name": "@hemia/core",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.3.0",
+    "class-variance-authority": "^0.7.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^3.9.0",
+    "typescript": "^5.4.0"
+  }
+}

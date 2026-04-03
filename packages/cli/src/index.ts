@@ -7,7 +7,7 @@ const program = new Command()
 
 program
   .name("hemia")
-  .description("@hemia/ui-vue CLI")
+  .description("@hemia/ui CLI — multi-framework component generator")
   .version("0.0.1")
 
 program
@@ -18,6 +18,7 @@ program
 program
   .command("add <component>")
   .description("Add a component to your project")
+  .option("-f, --framework <framework>", "Target framework (vue, react, svelte, astro)", "vue")
   .action(add)
 
 program.parse()

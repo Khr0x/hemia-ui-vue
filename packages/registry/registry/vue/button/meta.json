@@ -1,5 +1,6 @@
 {
   "name": "button",
+  "framework": "vue",
   "type": "component",
   "files": [
     "button.vue",
@@ -9,7 +10,7 @@
   "dependencies": [
     "class-variance-authority"
   ],
-  "peerDependencies": {
-    "@hemia/ui-vue": "workspace:*"
-  }
+  "peerDependencies": [
+    "@hemia/vue"
+  ]
 }

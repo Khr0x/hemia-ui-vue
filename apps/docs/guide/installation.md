@@ -9,7 +9,7 @@
 ## Setup
 
 ```bash
-pnpm add @hemia/ui-vue
+pnpm add @hemia/vue
 pnpm add -D @hemia/cli
 ```
 

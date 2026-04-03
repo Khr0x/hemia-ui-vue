@@ -5,18 +5,31 @@ import { createRequire } from "module"
 
 const require = createRequire(import.meta.url)
 
-function resolveRegistryPath() {
-  return path.dirname(
-    require.resolve("@hemia/ui-registry/package.json")
+function resolveRegistryPath(framework: string) {
+  const registryRoot = path.dirname(
+    require.resolve("@hemia/registry/package.json")
   )
+  return path.join(registryRoot, "registry", framework)
 }
 
-export async function add(name: string) {
-  const registryRoot = resolveRegistryPath()
-  const source = path.join(registryRoot, "registry", name)
+function getFrameworkFromConfig(): string {
+  try {
+    const config = fs.readJsonSync(
+      path.resolve(process.cwd(), "hemia.config.json")
+    )
+    return config.framework ?? "vue"
+  } catch {
+    return "vue"
+  }
+}
+
+export async function add(name: string, options: { framework?: string }) {
+  const framework = options.framework ?? getFrameworkFromConfig()
+  const frameworkRegistry = resolveRegistryPath(framework)
+  const source = path.join(frameworkRegistry, name)
 
   if (!(await fs.pathExists(source))) {
-    console.log(pc.red(`❌ Component "${name}" not found in registry`))
+    console.log(pc.red(`❌ Component "${name}" not found in registry for framework "${framework}"`))
     process.exit(1)
   }
 
@@ -26,5 +39,5 @@ export async function add(name: string) {
     filter: (src) => !src.endsWith("meta.json")
   })
 
-  console.log(pc.green(`✅ Component "${name}" added to src/components/ui/${name}`))
+  console.log(pc.green(`✅ Component "${name}" added to src/components/ui/${name} (${framework})`))
 }
