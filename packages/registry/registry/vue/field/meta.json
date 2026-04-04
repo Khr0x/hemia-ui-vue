@@ -1,0 +1,23 @@
+{
+  "name": "field",
+  "framework": "vue",
+  "type": "component",
+  "files": [
+    "field.vue",
+    "field-label.vue",
+    "field-description.vue",
+    "field-group.vue",
+    "field-legend.vue",
+    "field-separator.vue",
+    "fieldset.vue",
+    "field.variants.ts",
+    "index.ts"
+  ],
+  "registryDependencies": [],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "peerDependencies": [
+    "@hemia/lume-vue"
+  ]
+}

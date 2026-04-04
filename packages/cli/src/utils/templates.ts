@@ -26,7 +26,7 @@ export const GLOBALS_CSS_TEMPLATE = `@tailwind base;
     
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 47.4% 11.2%;
+    --ring: 210 5% 80% / 30%;
     
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
@@ -35,6 +35,7 @@ export const GLOBALS_CSS_TEMPLATE = `@tailwind base;
     --radius-sm: 0.375rem;
     --radius-md: 0.5rem;
     --radius-lg: 0.75rem;
+    --radius: 0.625rem;
   }
 
   .dark {
@@ -55,10 +56,11 @@ export const GLOBALS_CSS_TEMPLATE = `@tailwind base;
     
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 217.2 32.6% 50% / 30%;
     
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+    --radius: 0.625rem;
   }
 }
 
@@ -113,6 +115,7 @@ export default {
         sm: 'var(--radius-sm)',
         md: 'var(--radius-md)',
         lg: 'var(--radius-lg)',
+        DEFAULT: 'var(--radius)',
       },
     },
   },

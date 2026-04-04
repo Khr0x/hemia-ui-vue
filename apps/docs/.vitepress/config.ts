@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress"
 
 export default defineConfig({
-  title: "@hemia/ui",
+  title: "@hemia/lume",
   description: "A shadcn-inspired, multi-framework component system for Vue, React, Svelte, and Astro",
   themeConfig: {
     nav: [

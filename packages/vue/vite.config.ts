@@ -15,7 +15,7 @@ export default defineConfig({
       fileName: (format) => `index.${format === "es" ? "mjs" : "cjs"}`
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["vue", "@hemia/lume", "fs-extra", "path", "module"],
       output: {
         globals: { vue: "Vue" }
       }

@@ -22,3 +22,19 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
+
+# Vite temp files
+*.timestamp-*.mjs
+
+# VitePress
+**/.vitepress/cache/
+**/.vitepress/dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# vue-tsc generated files
+apps/web/src/**/*.js
+apps/web/src/**/*.vue.js
+packages/registry/registry/**/*.js
+packages/registry/registry/**/*.vue.js

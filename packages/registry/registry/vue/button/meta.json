@@ -4,13 +4,14 @@
   "type": "component",
   "files": [
     "button.vue",
-    "button.variants.ts"
+    "button.variants.ts",
+    "index.ts"
   ],
   "registryDependencies": [],
   "dependencies": [
     "class-variance-authority"
   ],
   "peerDependencies": [
-    "@hemia/vue"
+    "@hemia/lume-vue"
   ]
 }

@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
+      "@/components/ui": resolve(__dirname, "../../packages/registry/registry/vue"),
       "@": resolve(__dirname, "src")
     }
   }

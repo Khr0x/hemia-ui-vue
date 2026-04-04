@@ -19,7 +19,7 @@ function getFrameworkFromConfig(): string {
 
 function resolveRegistryPath(framework: string) {
   const registryRoot = path.dirname(
-    require.resolve("@hemia/registry/package.json")
+    require.resolve("@hemia/lume-registry/package.json")
   )
   return path.join(registryRoot, "registry", framework)
 }

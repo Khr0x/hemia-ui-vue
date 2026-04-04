@@ -1,6 +1,7 @@
 {
   "name": "hemia",
   "private": true,
+  "packageManager": "pnpm@10.9.0",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",

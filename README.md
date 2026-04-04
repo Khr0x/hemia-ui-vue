@@ -1,4 +1,4 @@
-# @hemia/ui
+# @hemia/lume
 
 A shadcn-inspired, **multi-framework**, local-first component generator.
 
@@ -8,19 +8,19 @@ A shadcn-inspired, **multi-framework**, local-first component generator.
 
 | Package | Version | Description |
 |---|---|---|
-| `@hemia/core` | 0.0.1 | Runtime, tokens (framework-agnostic) |
-| `@hemia/vue` | 0.0.1 | Vue 3 components |
-| `@hemia/registry` | 0.0.1 | Component templates |
-| `@hemia/cli` | 0.0.1 | Universal CLI |
+| `@hemia/lume` | 0.0.1 | Runtime, tokens (framework-agnostic) |
+| `@hemia/lume-vue` | 0.0.1 | Vue 3 components |
+| `@hemia/lume-registry` | 0.0.1 | Component templates |
+| `hemia-lume` | 0.0.1 | Universal CLI |
 
 ## Quick Start (Vue)
 
 ```bash
-pnpm add @hemia/vue
-pnpm add -D @hemia/cli
+pnpm add @hemia/lume-vue
+pnpm add -D hemia-lume
 
-npx hemia init
-npx hemia add button
+bunx --bun hemia-lume@latest init
+bunx --bun hemia-lume@latest add button
 ```
 
 ## Monorepo Structure
@@ -31,10 +31,10 @@ hemia-ui/
 │   ├── web/         # Vue 3 playground
 │   └── docs/        # VitePress docs
 ├── packages/
-│   ├── core/        # @hemia/core
-│   ├── vue/         # @hemia/vue
-│   ├── registry/    # @hemia/registry
-│   └── cli/         # @hemia/cli
+│   ├── core/        # @hemia/lume
+│   ├── vue/         # @hemia/lume-vue
+│   ├── registry/    # @hemia/lume-registry
+│   └── cli/         # hemia-lume
 ```
 
 # web

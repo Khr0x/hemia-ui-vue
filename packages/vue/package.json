@@ -1,5 +1,5 @@
 {
-  "name": "@hemia/vue",
+  "name": "@hemia/lume-vue",
   "version": "0.0.1",
   "type": "module",
   "exports": {
@@ -15,9 +15,10 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@hemia/core": "workspace:*"
+    "@hemia/lume": "workspace:*"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "vue": "^3.4.0",
     "vite": "^5.0.0",
     "vite-plugin-dts": "^3.9.0",

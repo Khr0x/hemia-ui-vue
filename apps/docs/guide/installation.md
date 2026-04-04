@@ -9,14 +9,14 @@
 ## Setup
 
 ```bash
-pnpm add @hemia/vue
-pnpm add -D @hemia/cli
+pnpm add @hemia/lume-vue
+pnpm add -D hemia-lume
 ```
 
 ## Initialize
 
 ```bash
-npx hemia init
+bunx --bun hemia-lume@latest init
 ```
 
 This creates a `hemia.config.json` in your project root.
@@ -24,7 +24,7 @@ This creates a `hemia.config.json` in your project root.
 ## Add your first component
 
 ```bash
-npx hemia add button
+bunx --bun hemia-lume@latest add button
 ```
 
 The component will be copied to `src/components/ui/button/`.

@@ -1,0 +1,17 @@
+{
+  "name": "textfield",
+  "framework": "vue",
+  "type": "component",
+  "files": [
+    "textfield.vue",
+    "textfield.variants.ts",
+    "index.ts"
+  ],
+  "registryDependencies": ["field"],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "peerDependencies": [
+    "@hemia/lume-vue"
+  ]
+}

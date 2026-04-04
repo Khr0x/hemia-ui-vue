@@ -1,18 +1,17 @@
 {
-  "name": "hemia-ui",
+  "name": "hemia-lume",
   "version": "0.0.1",
   "type": "module",
   "bin": {
-    "hemia": "./dist/index.js",
-    "hemia-ui": "./dist/index.js"
+    "hemia-lume": "./dist/index.js"
   },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",
     "dev": "tsup src/index.ts --format esm --watch"
   },
   "dependencies": {
-    "@hemia/core": "workspace:*",
-    "@hemia/registry": "workspace:*",
+    "@hemia/lume": "workspace:*",
+    "@hemia/lume-registry": "workspace:*",
     "commander": "^12.0.0",
     "fs-extra": "^11.0.0",
     "picocolors": "^1.0.0",

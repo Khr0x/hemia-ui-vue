@@ -142,7 +142,7 @@ export async function init(options: { template?: string } = {}) {
 
     // Install framework peer dependency
     console.log() // Empty line
-    const frameworkPkg = framework === "vue" ? "@hemia/vue" : `@hemia/${framework}`
+    const frameworkPkg = framework === "vue" ? "@hemia/lume-vue" : `@hemia/lume-${framework}`
     console.log(pc.cyan(`📦 Installing ${frameworkPkg}...`))
     console.log(pc.dim(`   When published, run: npm install ${frameworkPkg}`))
   }

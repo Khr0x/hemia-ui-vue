@@ -1,5 +1,10 @@
 {
-  "name": "@hemia/registry",
+  "name": "@hemia/lume-registry",
   "version": "0.0.1",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@hemia/lume-vue": "workspace:*",
+    "class-variance-authority": "^0.7.1",
+    "vue": "^3.4.0"
+  }
 }

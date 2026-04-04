@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@hemia/lume-vue": ["../vue/src/index.ts"],
+      "@hemia/lume": ["../core/src/index.ts"]
+    },
+    "jsx": "preserve",
+    "lib": ["ESNext", "DOM"]
+  },
+  "include": ["registry/**/*.ts", "registry/**/*.vue"],
+  "exclude": ["node_modules", "dist"]
+}

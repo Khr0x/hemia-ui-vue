@@ -5,7 +5,7 @@ A flexible button component with multiple variants and sizes.
 ## Usage
 
 ```bash
-npx hemia add button
+bunx --bun hemia-lume@latest add button
 ```
 
 ## Variants

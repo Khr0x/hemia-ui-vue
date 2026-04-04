@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "@hemia/ui"
+  name: "@hemia/lume"
   text: "A shadcn-inspired, multi-framework UI system"
   tagline: Local-first. CLI-driven. Themeable.
   actions:
