@@ -66,6 +66,8 @@ import {
 
 | Prop | Tipo | Default | Descripción |
 |------|------|---------|-------------|
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | Tamaño del diálogo |
+| `persistent` | `boolean` | `false` | Si es true, no se cierra al hacer click fuera |
 | `class` | `string` | `''` | Clases CSS adicionales |
 
 ### AlertDialogHeader
@@ -100,6 +102,12 @@ import {
 | `class` | `string` | `''` | Clases CSS adicionales |
 
 ### AlertDialogCancel
+
+| Prop | Tipo | Default | Descripción |
+|------|------|---------|-------------|
+| `class` | `string` | `''` | Clases CSS adicionales |
+
+### AlertDialogMedia
 
 | Prop | Tipo | Default | Descripción |
 |------|------|---------|-------------|
@@ -147,10 +155,15 @@ Contenedor del contenido del diálogo con overlay y animaciones.
 
 ### AlertDialogHeader
 
-Contenedor para el título y descripción.
+Contenedor para el título y descripción. Soporta un slot `#media` para mostrar iconos centrados.
 
 ```vue
 <AlertDialogHeader>
+  <template #media>
+    <AlertDialogMedia>
+      <IconComponent />
+    </AlertDialogMedia>
+  </template>
   <AlertDialogTitle>Confirm Action</AlertDialogTitle>
   <AlertDialogDescription>
     Are you sure you want to proceed?
@@ -306,6 +319,23 @@ function handleContinue() {
 </AlertDialogContent>
 ```
 
+### Dialog persistente
+
+```vue
+<AlertDialogContent persistent>
+  <AlertDialogHeader>
+    <AlertDialogTitle>Dialog Persistente</AlertDialogTitle>
+    <AlertDialogDescription>
+      Este diálogo no se cerrará al hacer click fuera.
+    </AlertDialogDescription>
+  </AlertDialogHeader>
+  <AlertDialogFooter>
+    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+    <AlertDialogAction>Confirmar</AlertDialogAction>
+  </AlertDialogFooter>
+</AlertDialogContent>
+```
+
 ## Comportamiento
 
 - **Overlay**: Un fondo oscuro con opacidad (80%) cubre toda la pantalla
@@ -313,7 +343,8 @@ function handleContinue() {
 - **Animaciones**: 
   - Fade in/out para el overlay (200ms)
   - Scale y fade para el contenido del diálogo
-- **Cierre**: Se cierra al hacer clic en el overlay o en el botón Cancel
+- **Cierre**: Se cierra al hacer clic en el overlay o en el botón Cancel (excepto con `persistent`)
+- **Tamaño sm**: El contenido se centra y los botones ocupan el ancho completo del diálogo
 
 ## Accesibilidad
 

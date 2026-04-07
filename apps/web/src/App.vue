@@ -31,6 +31,8 @@ const navSections: NavSection[] = [
       { id: "textfield", label: "TextField", badge: "new" },
       { id: "alert", label: "Alert", badge: "new" },
       { id: "alert-dialog", label: "Alert Dialog", badge: "new" },
+      { id: "badge", label: "Badge", badge: "new" },
+      { id: "card", label: "Card", badge: "new" },
     ],
   },
 ]
@@ -45,6 +47,10 @@ function handleNavigate(id: string) {
   } else if (id.startsWith('textfield')) {
     router.push(id)
   } else if (id.startsWith('alert')) {
+    router.push(id)
+  } else if (id.startsWith('badge')) {
+    router.push(id)
+  } else if (id.startsWith('card')) {
     router.push(id)
   } else if (id.startsWith('/')) {
     router.push(id)

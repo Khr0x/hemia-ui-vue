@@ -1,0 +1,16 @@
+{
+  "name": "badge",
+  "framework": "vue",
+  "type": "component",
+  "files": [
+    "badge.vue",
+    "index.ts"
+  ],
+  "registryDependencies": [],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "peerDependencies": [
+    "@hemia/lume-vue"
+  ]
+}

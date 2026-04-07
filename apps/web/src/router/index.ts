@@ -29,6 +29,16 @@ const router = createRouter({
       component: () => import('@/views/AlertDialogPage.vue'),
     },
     {
+      path: '/badge',
+      name: 'badge',
+      component: () => import('@/views/BadgePage.vue'),
+    },
+    {
+      path: '/card',
+      name: 'card',
+      component: () => import('@/views/CardPage.vue'),
+    },
+    {
       path: '/tokens',
       name: 'tokens',
       component: () => import('@/views/TokensPage.vue'),

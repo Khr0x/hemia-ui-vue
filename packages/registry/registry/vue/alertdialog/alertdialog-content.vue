@@ -10,6 +10,7 @@ const dialog = inject<{
 const props = defineProps<{
   class?: string
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  persistent?: boolean
 }>()
 
 // Provide size to child components
@@ -48,7 +49,8 @@ const isCentered = computed(() => props.size === 'sm')
       <div
         v-if="isOpen"
         class="fixed inset-0 z-50 bg-black/80"
-        @click="close"
+        :class="{ 'cursor-not-allowed pointer-events-none': props.persistent }"
+        @click="!props.persistent && close()"
       />
     </Transition>
   </Teleport>

@@ -1,0 +1,18 @@
+{
+  "name": "card",
+  "framework": "vue",
+  "type": "component",
+  "files": [
+    "card.vue",
+    "card-header.vue",
+    "card-title.vue",
+    "card-description.vue",
+    "card-content.vue",
+    "card-footer.vue",
+    "card-action.vue",
+    "index.ts"
+  ],
+  "registryDependencies": [],
+  "dependencies": [],
+  "peerDependencies": ["@hemia/lume-vue"]
+}

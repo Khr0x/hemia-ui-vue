@@ -30,7 +30,9 @@ export default defineConfig({
         items: [
           { text: "Alert", link: "/components/alert" },
           { text: "Alert Dialog", link: "/components/alert-dialog" },
+          { text: "Badge", link: "/components/badge" },
           { text: "Button", link: "/components/button" },
+          { text: "Card", link: "/components/card" },
           { text: "Field", link: "/components/field" },
           { text: "TextField", link: "/components/textfield" },
           { text: "Icon", link: "/components/icon" }

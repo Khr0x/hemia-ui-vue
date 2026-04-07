@@ -59,13 +59,13 @@ import ShowcaseCard from "../ShowcaseCard.vue"
           <div class="flex flex-wrap gap-2">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="outline" size="sm">Small</Button>
+                <Button variant="outline" size="sm">Small (centered)</Button>
               </AlertDialogTrigger>
               <AlertDialogContent size="sm">
                 <AlertDialogHeader>
                   <AlertDialogTitle>Small Dialog</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This is a small dialog for simple confirmations.
+                    Content is centered and buttons are full width.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -138,32 +138,71 @@ import ShowcaseCard from "../ShowcaseCard.vue"
       </ShowcaseCard>
     </div>
 
+    <!-- Persistent -->
+    <div id="section-persistent">
+      <ShowcaseCard title="Persistent" description="Dialog that cannot be closed by clicking outside">
+        <div class="space-y-4">
+          <div class="flex items-center justify-center py-8">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">Open Persistent Dialog</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent persistent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Permanent Dialog</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This dialog will not close when you click outside. Use the buttons below to close it.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction>Confirm</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+          <div class="rounded-lg bg-muted/50 p-3">
+            <p class="text-xs font-mono text-muted-foreground">
+              &lt;AlertDialogContent persistent /&gt;
+            </p>
+          </div>
+        </div>
+      </ShowcaseCard>
+    </div>
+
     <!-- With Media -->
     <div id="section-media">
-      <ShowcaseCard title="With Media" description="Dialog with icon/media">
-        <div class="flex items-center justify-center py-8">
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="destructive">Delete Account</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <template #media>
-                  <AlertDialogMedia class="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                  </AlertDialogMedia>
-                </template>
-                <AlertDialogTitle>Delete account?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This will permanently delete your account. This action cannot be undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+      <ShowcaseCard title="With Media" description="Dialog with icon/media using #media slot">
+        <div class="space-y-4">
+          <div class="flex items-center justify-center py-8">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive">Delete Account</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <template #media>
+                    <AlertDialogMedia class="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                    </AlertDialogMedia>
+                  </template>
+                  <AlertDialogTitle>Delete account?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will permanently delete your account. This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+          <div class="rounded-lg bg-muted/50 p-3">
+            <p class="text-xs font-mono text-muted-foreground">
+              Use &lt;template #media&gt; slot in AlertDialogHeader to center media
+            </p>
+          </div>
         </div>
       </ShowcaseCard>
     </div>
@@ -251,7 +290,7 @@ import ShowcaseCard from "../ShowcaseCard.vue"
                 </tr>
                 <tr class="border-b">
                   <td class="py-2 font-mono text-xs">AlertDialogContent</td>
-                  <td class="py-2 text-muted-foreground">size?: 'sm' | 'md' | 'lg' | 'xl' | 'full', class?: string</td>
+                  <td class="py-2 text-muted-foreground">size?: 'sm' | 'md' | 'lg' | 'xl' | 'full', persistent?: boolean, class?: string</td>
                 </tr>
                 <tr class="border-b">
                   <td class="py-2 font-mono text-xs">AlertDialogHeader</td>
