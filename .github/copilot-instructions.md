@@ -18,13 +18,13 @@ hemia-ui/
 │   ├── web/              # Playground Vue 3 + Vite + Tailwind
 │   └── docs/             # Documentación VitePress (multi-framework)
 ├── packages/
-│   ├── core/             # @hemia/lume — runtime + tokens (framework-agnostic)
+│   ├── core/             # @hemia/lume-core — runtime + tokens (framework-agnostic)
 │   ├── vue/              # @hemia/lume-vue — generator utils para Vue 3
 │   ├── registry/         # @hemia/lume-registry — templates por framework
 │   │   └── registry/
 │   │       ├── vue/      # componentes Vue
 │   │       └── react/    # placeholder futuro
-│   └── cli/              # hemia-lume — CLI universal
+│   └── cli/              # @hemia/lume — CLI universal
 ├── turbo.json
 ├── pnpm-workspace.yaml
 ├── tsconfig.base.json
@@ -37,13 +37,13 @@ hemia-ui/
 
 | Package | Scope | Rol |
 |---|---|---|
-| `core` | `@hemia/lume` | `cn()`, `cva`, tokens CSS — sin dependencia de framework |
-| `vue` | `@hemia/lume-vue` | Re-exporta `@hemia/lume` + generator utils para Vue 3 |
+| `core` | `@hemia/lume-core` | `cn()`, `cva`, tokens CSS — sin dependencia de framework |
+| `vue` | `@hemia/lume-vue` | Re-exporta `@hemia/lume-core` + generator utils para Vue 3 |
 | `registry` | `@hemia/lume-registry` | Templates de componentes organizados por framework |
-| `cli` | `hemia-lume` | CLI ejecutable (`bunx --bun hemia-lume@latest`) |
+| `cli` | `@hemia/lume` | CLI ejecutable (`bunx @hemia/lume@latest`) |
 
-> ⚠️ `@hemia/lume-vue` re-exporta todo desde `@hemia/lume`. En proyectos Vue, solo instalar `@hemia/lume-vue`.
-> 💡 El CLI se publica como `hemia-lume` para permitir `bunx --bun hemia-lume@latest init` (similar a shadcn).
+> ⚠️ `@hemia/lume-vue` re-exporta todo desde `@hemia/lume-core`. En proyectos Vue, solo instalar `@hemia/lume-vue`.
+> 💡 El CLI se publica como `@hemia/lume` para permitir `bunx @hemia/lume@latest init` (similar a shadcn).
 
 ---
 
@@ -51,7 +51,7 @@ hemia-ui/
 
 ### Flujo completo del sistema
 
-#### 1. **@hemia/lume** (core) - La base compartida
+#### 1. **@hemia/lume-core** (core) - La base compartida
 Proporciona las utilidades base (`cn()`, `cva`) y tokens de diseño que **todos los frameworks** comparten. No tiene dependencia de Vue, React, etc.
 
 ```typescript
@@ -65,10 +65,10 @@ export { radius } from "./tokens/radius"
 ```
 
 #### 2. **@hemia/lume-vue** - Adaptador de framework (runtime-only)
-Re-exporta `@hemia/lume` para que los usuarios Vue **solo instalen un paquete** + utilidades auxiliares.
+Re-exporta `@hemia/lume-core` para que los usuarios Vue **solo instalen un paquete** + utilidades auxiliares.
 
 ```typescript
-export * from "@hemia/lume"   // re-exporta todo de core
+export * from "@hemia/lume-core"   // re-exporta todo de core
 export { resolveRegistryPath } from "./generator"  // utils de tooling
 ```
 
@@ -91,7 +91,7 @@ packages/registry/registry/
 
 El CLI lee desde aquí para copiar al proyecto del usuario. Se publica a npm para que el CLI pueda resolverlo vía `require.resolve()`.
 
-#### 4. **hemia-lume** (CLI) - El orquestador
+#### 4. **@hemia/lume** (CLI) - El orquestador
 Copia componentes desde `@hemia/lume-registry` al proyecto del usuario.
 
 ```typescript
@@ -114,9 +114,9 @@ await installDependencies(dependencies)
 ```
 Usuario (proyecto Vue)
   ├── instala → @hemia/lume-vue
-  │               └── depende de → @hemia/lume (core)
+  │               └── depende de → @hemia/lume-core
   │
-  └── ejecuta → bunx hemia-lume add button
+  └── ejecuta → bunx @hemia/lume@latest add button
                   └── CLI lee → @hemia/lume-registry
                       └── copia archivos → src/components/ui/button/
                       └── instala → @hemia/lume-vue (si está en peerDependencies)
@@ -126,13 +126,13 @@ Usuario (proyecto Vue)
 
 ```bash
 # 1. Usuario inicializa proyecto Vue
-bunx --bun hemia-lume@latest init
+bunx @hemia/lume@latest init
 # → CLI detecta framework: "vue"
 # → Genera hemia.config.json
 # → Usuario instala @hemia/lume-vue manualmente o via preset
 
 # 2. Usuario agrega componente
-bunx --bun hemia-lume@latest add button
+bunx @hemia/lume@latest add button
 # → CLI lee @hemia/lume-registry/registry/vue/button/
 # → Copia button.vue (self-contained) a src/components/ui/
 # → NO copia meta.json
@@ -144,7 +144,7 @@ bunx --bun hemia-lume@latest add button
 ```vue
 <script setup>
 import { Button } from "@/components/ui/button"
-import { cn } from "@hemia/lume-vue"  // ← re-exportado de @hemia/lume
+import { cn } from "@hemia/lume-vue"  // ← re-exportado de @hemia/lume-core
 </script>
 
 <template>
@@ -193,7 +193,7 @@ export function cn(...inputs: ClassValue[]) {
 ```
 - Siempre usar `cn()` para combinar clases en componentes
 - Nunca usar concatenación de strings directa para clases Tailwind
-- Viene de `@hemia/lume` — disponible en todos los frameworks
+- Viene de `@hemia/lume-core` — disponible en todos los frameworks
 
 ---
 
@@ -291,13 +291,13 @@ const props = defineProps<{
 - Siempre usar `cn()` combinando variantes + prop class
 - Siempre usar `<slot />` para contenido
 - Sin estilos scoped (`<style scoped>`) — todo via Tailwind
-- Importar `cn` desde `@hemia/lume-vue`, no desde `@hemia/lume`
+- Importar `cn` desde `@hemia/lume-vue`, no desde `@hemia/lume-core`
 
 ---
 
 ## 🎨 Design Tokens
 
-Los tokens viven en `@hemia/lume` y son compartidos por todos los frameworks.
+Los tokens viven en `@hemia/lume-core` y son compartidos por todos los frameworks.
 
 ```ts
 // packages/core/src/tokens/colors.ts
@@ -339,28 +339,28 @@ CSS variables base (en `apps/web/src/assets/globals.css`):
 
 ---
 
-## ⚙️ CLI (`hemia-lume`)
+## ⚙️ CLI (`@hemia/lume`)
 
 ### Comandos disponibles
 ```bash
 # Inicializar proyecto
-hemia-lume init                              # Detecta framework y genera config
-hemia-lume init -t nuxt                      # Con template específico (vite-vue, nuxt, next)
-hemia-lume init --preset dashboard           # Con preset de componentes
+lume init                              # Detecta framework y genera config
+lume init -t nuxt                      # Con template específico (vite-vue, nuxt, next)
+lume init --preset dashboard           # Con preset de componentes
 
 # Agregar componentes
-hemia-lume add button                        # Un componente
-hemia-lume add button card badge             # Múltiples componentes
-hemia-lume add card --framework react        # Override de framework
-hemia-lume add button -y                     # Sin confirmación de sobrescritura
+lume add button                        # Un componente
+lume add button card badge             # Múltiples componentes
+lume add card --framework react        # Override de framework
+lume add button -y                     # Sin confirmación de sobrescritura
 
 # Listar componentes disponibles
-hemia-lume list                              # Lista para framework del config
-hemia-lume list --framework react            # Lista para framework específico
+lume list                              # Lista para framework del config
+lume list --framework react            # Lista para framework específico
 
 # Uso con bunx (recomendado)
-bunx --bun hemia-lume@latest init
-bunx --bun hemia-lume@latest add button
+bunx @hemia/lume@latest init
+bunx @hemia/lume@latest add button
 ```
 
 ### `hemia.config.json` (generado por `init`)
@@ -473,7 +473,7 @@ packages/cli/src/
 
 ## 📁 Exports por package
 
-### `@hemia/lume`
+### `@hemia/lume-core`
 ```ts
 export * from "./runtime"   // cn(), cva, VariantProps
 export * from "./tokens"    // colors, radius
@@ -481,7 +481,7 @@ export * from "./tokens"    // colors, radius
 
 ### `@hemia/lume-vue`
 ```ts
-export * from "@hemia/lume"   // re-exporta todo de core
+export * from "@hemia/lume-core"   // re-exporta todo de core
 export * from "./generator"   // resolveRegistryPath() (solo utils de tooling)
 ```
 
@@ -510,7 +510,7 @@ Todos los packages usan exports map moderno:
 - ❌ No usar `require()` directamente — siempre `createRequire(import.meta.url)` en ESM
 - ❌ No concatenar clases Tailwind con strings — siempre usar `cn()`
 - ❌ No reinventar `cva` — usar `class-variance-authority` directamente
-- ❌ No importar desde `@hemia/lume` en componentes del registry — importar desde el package del framework (`@hemia/lume-vue`)
+- ❌ No importar desde `@hemia/lume-core` en componentes del registry — importar desde el package del framework (`@hemia/lume-vue`)
 - ❌ No agregar estilos hardcoded — todo debe referenciar CSS variables
 - ❌ No crear packages `@hemia/lume-react`, `@hemia/lume-svelte`, `@hemia/lume-astro` aún — solo cuando se implementen
 
@@ -556,5 +556,5 @@ pnpm typecheck
 - `@hemia/lume-svelte` → componentes Svelte
 - `@hemia/lume-astro` → componentes Astro
 - Soporte multi-theme (dark mode, brand themes)
-- Separar `@hemia/lume` en `@hemia/lume-runtime` + `@hemia/lume-tokens` si el scope crece mucho
+- Separar `@hemia/lume-core` en `@hemia/lume-runtime` + `@hemia/lume-tokens` si el scope crece mucho
 - Registry remoto (HTTP) además del local (npm package)

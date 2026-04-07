@@ -1,7 +1,11 @@
 {
-  "name": "@hemia/lume",
+  "name": "@hemia/lume-core",
   "version": "0.0.1",
   "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -13,6 +17,9 @@
     "build": "vite build",
     "dev": "vite build --watch",
     "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "clsx": "^2.1.0",

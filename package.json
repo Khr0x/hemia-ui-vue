@@ -12,7 +12,10 @@
     "build:web": "pnpm --filter web build",
     "build:docs": "pnpm --filter docs build",
     "preview:web": "pnpm --filter web preview",
-    "preview:docs": "pnpm --filter docs preview"
+    "preview:docs": "pnpm --filter docs preview",
+    "local:link": "(cd packages/core && bun link) && (cd packages/vue && bun link) && (cd packages/registry && bun link) && (cd packages/cli && bun link)",
+    "local:unlink": "(cd packages/core && bun unlink) && (cd packages/vue && bun unlink) && (cd packages/registry && bun unlink) && (cd packages/cli && bun unlink)",
+    "local:link:build": "turbo run build && (cd packages/core && bun link) && (cd packages/vue && bun link) && (cd packages/registry && bun link) && (cd packages/cli && bun link)"
   },
   "devDependencies": {
     "turbo": "^2.0.0",

@@ -66,7 +66,7 @@ importers:
 
   packages/cli:
     dependencies:
-      '@hemia/lume':
+      '@hemia/lume-core':
         specifier: workspace:*
         version: link:../core
       '@hemia/lume-registry':
@@ -134,9 +134,9 @@ importers:
 
   packages/vue:
     dependencies:
-      '@hemia/lume':
-        specifier: workspace:*
-        version: link:../core
+      '@hemia/lume-core':
+        specifier: ^0.0.1
+        version: 0.0.1
     devDependencies:
       '@types/node':
         specifier: ^22.0.0
@@ -575,6 +575,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@hemia/lume-core@0.0.1':
+    resolution: {integrity: sha512-m5v7AOVfNUUEZ1o4TABTNx7EmU1tL/7ctGhPgCf5438jy7J823rgIx9LpzYUo4/hGNTM9Md68UnvSpiwr9JjAA==}
 
   '@iconify-json/simple-icons@1.2.76':
     resolution: {integrity: sha512-lLRlA8yaf+1L5VCPRvR9lynoSklsddKHEylchmZJKdj/q2xVQ1ZAEJ8SCQlv9cbgtMefnlyM98U+8Si2aoFZPA==}
@@ -2197,6 +2200,12 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.7':
     optional: true
+
+  '@hemia/lume-core@0.0.1':
+    dependencies:
+      class-variance-authority: 0.7.1
+      clsx: 2.1.1
+      tailwind-merge: 2.6.1
 
   '@iconify-json/simple-icons@1.2.76':
     dependencies:
