@@ -1,9 +1,9 @@
 {
-  "name": "hemia-lume",
+  "name": "@hemia/lume-cli",
   "version": "0.0.1",
   "type": "module",
   "bin": {
-    "hemia-lume": "./dist/index.js"
+    "lume": "./dist/index.js"
   },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",

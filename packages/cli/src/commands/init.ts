@@ -8,6 +8,20 @@ import { installDependencies } from "../utils/package-manager.js"
 const SUPPORTED_FRAMEWORKS = ["vue", "react", "svelte", "astro"] as const
 type Framework = typeof SUPPORTED_FRAMEWORKS[number]
 
+interface InitOptions {
+  template?: string
+  preset?: string
+  defaults?: boolean
+  yes?: boolean
+  force?: boolean
+  cwd?: string
+  silent?: boolean
+  monorepo?: boolean
+  reinstall?: boolean
+  cssVariables?: boolean
+  components?: string[]
+}
+
 function detectFramework(): Framework | null {
   try {
     const pkg = fs.readJsonSync(path.resolve(process.cwd(), "package.json"))
@@ -22,47 +36,116 @@ function detectFramework(): Framework | null {
   }
 }
 
-export async function init(options: { template?: string } = {}) {
-  const configPath = path.resolve(process.cwd(), "hemia.config.json")
+function log(message: string, options: InitOptions) {
+  if (!options.silent) {
+    console.log(message)
+  }
+}
 
-  if (await fs.pathExists(configPath)) {
-    console.log(pc.yellow("⚠️  hemia.config.json already exists"))
-    const { overwrite } = await prompts({
-      type: "confirm",
-      name: "overwrite",
-      message: "Do you want to overwrite it?",
-      initial: false
-    })
-    if (!overwrite) return
+function warn(message: string, options: InitOptions) {
+  if (!options.silent) {
+    console.log(pc.yellow(`⚠️  ${message}`))
+  }
+}
+
+function info(message: string, options: InitOptions) {
+  if (!options.silent) {
+    console.log(pc.cyan(message))
+  }
+}
+
+export async function init(options: InitOptions = {}) {
+  // Show "coming soon" messages for unimplemented options
+  if (options.preset) {
+    warn("Preset option is not implemented yet. Coming soon!", options)
+  }
+
+  if (options.defaults) {
+    warn("Defaults option is not implemented yet. Coming soon!", options)
+  }
+
+  if (options.monorepo) {
+    warn("Monorepo option is not implemented yet. Coming soon!", options)
+  }
+
+  if (options.reinstall) {
+    warn("Reinstall option is not implemented yet. Coming soon!", options)
+  }
+
+  // Handle --no-monorepo flag
+  if (options.monorepo === false) {
+    // User explicitly opted out of monorepo - no message needed
+  }
+
+  // Handle --no-reinstall flag
+  if (options.reinstall === false) {
+    // User explicitly opted out of reinstall - no message needed
+  }
+
+  // Determine working directory
+  const cwd = options.cwd ? path.resolve(options.cwd) : process.cwd()
+
+  // Validate template
+  const validTemplates = ["next", "vite", "start", "react-router", "laravel", "astro"]
+  let template = options.template?.toLowerCase()
+
+  if (template && !validTemplates.includes(template)) {
+    warn(`Invalid template "${template}". Using default.`, options)
+    template = undefined
+  }
+
+  const configPath = path.resolve(cwd, "lume.config.json")
+  const configExists = await fs.pathExists(configPath)
+
+  if (configExists && !options.force) {
+    if (!options.yes) {
+      const { overwrite } = await prompts({
+        type: "confirm",
+        name: "overwrite",
+        message: "lume.config.json already exists. Overwrite?",
+        initial: false
+      })
+      if (!overwrite) {
+        log("Cancelled.", options)
+        return
+      }
+    }
   }
 
   const detected = detectFramework()
 
-  const { framework } = detected
-    ? { framework: detected }
-    : await prompts({
-        type: "select",
-        name: "framework",
-        message: "Which framework are you using?",
-        choices: SUPPORTED_FRAMEWORKS.map((f) => ({ title: f, value: f }))
-      })
+  let framework: Framework
+  if (detected) {
+    framework = detected
+    info(`Detected framework: ${detected}`, options)
+  } else if (!options.yes) {
+    const { framework: selectedFramework } = await prompts({
+      type: "select",
+      name: "framework",
+      message: "Which framework are you using?",
+      choices: SUPPORTED_FRAMEWORKS.map((f) => ({ title: f, value: f }))
+    })
+    framework = selectedFramework
+  } else {
+    // Default to vue if --yes and no framework detected
+    framework = "vue"
+  }
 
   if (!framework) {
-    console.log(pc.red("❌ Framework selection required"))
+    log(pc.red("❌ Framework selection required"), options)
     process.exit(1)
   }
 
-  if (detected) {
-    console.log(pc.cyan(`🔍 Detected framework: ${detected}`))
-  }
-
   // Get template configuration
-  const templateConfig = getTemplateConfig(framework, options.template)
+  const templateConfig = getTemplateConfig(framework, template)
+
+  // Determine CSS variables setting
+  const useCssVariables = options.cssVariables !== false
 
   // Create config file
   const config = {
     framework,
-    style: "default",
+    style: useCssVariables ? "css-variables" : "default",
     template: templateConfig.template,
     tailwind: {
       config: templateConfig.tailwindConfigPath,
@@ -76,79 +159,91 @@ export async function init(options: { template?: string } = {}) {
   }
 
   await fs.writeJson(configPath, config, { spaces: 2 })
-  console.log(pc.green(`✅ Created hemia.config.json`))
+  log(pc.green(`✅ Created lume.config.json`), options)
 
-  // Ask to write CSS and Tailwind config
-  const { writeFiles } = await prompts({
-    type: "confirm",
-    name: "writeFiles",
-    message: "Write globals.css and tailwind.config.ts?",
-    initial: true
-  })
+  // Ask to write CSS and Tailwind config (skip if --yes)
+  let writeFiles = options.yes
+  if (!options.yes) {
+    const { confirm } = await prompts({
+      type: "confirm",
+      name: "confirm",
+      message: "Write globals.css and tailwind.config.ts?",
+      initial: true
+    })
+    writeFiles = confirm
+  }
 
   if (writeFiles) {
     // Write globals.css
-    const cssPath = path.resolve(process.cwd(), templateConfig.globalsCssPath)
+    const cssPath = path.resolve(cwd, templateConfig.globalsCssPath)
     await fs.ensureDir(path.dirname(cssPath))
-    
+
     if (await fs.pathExists(cssPath)) {
-      const { overwriteCss } = await prompts({
-        type: "confirm",
-        name: "overwriteCss",
-        message: `${templateConfig.globalsCssPath} already exists. Overwrite?`,
-        initial: false
-      })
-      if (overwriteCss) {
-        await fs.writeFile(cssPath, GLOBALS_CSS_TEMPLATE)
-        console.log(pc.green(`✅ Updated ${templateConfig.globalsCssPath}`))
+      if (options.force || !options.yes) {
+        const { overwrite } = await prompts({
+          type: "confirm",
+          name: "overwrite",
+          message: `${templateConfig.globalsCssPath} already exists. Overwrite?`,
+          initial: false
+        })
+        if (overwrite) {
+          await fs.writeFile(cssPath, GLOBALS_CSS_TEMPLATE)
+          log(pc.green(`✅ Updated ${templateConfig.globalsCssPath}`), options)
+        }
       }
     } else {
       await fs.writeFile(cssPath, GLOBALS_CSS_TEMPLATE)
-      console.log(pc.green(`✅ Created ${templateConfig.globalsCssPath}`))
+      log(pc.green(`✅ Created ${templateConfig.globalsCssPath}`), options)
     }
 
     // Write tailwind.config.ts
-    const tailwindPath = path.resolve(process.cwd(), templateConfig.tailwindConfigPath)
-    
+    const tailwindPath = path.resolve(cwd, templateConfig.tailwindConfigPath)
+
     if (await fs.pathExists(tailwindPath)) {
-      const { overwriteTailwind } = await prompts({
-        type: "confirm",
-        name: "overwriteTailwind",
-        message: `${templateConfig.tailwindConfigPath} already exists. Overwrite?`,
-        initial: false
-      })
-      if (overwriteTailwind) {
-        await fs.writeFile(tailwindPath, TAILWIND_CONFIG_TEMPLATE)
-        console.log(pc.green(`✅ Updated ${templateConfig.tailwindConfigPath}`))
+      if (options.force || !options.yes) {
+        const { overwrite } = await prompts({
+          type: "confirm",
+          name: "overwrite",
+          message: `${templateConfig.tailwindConfigPath} already exists. Overwrite?`,
+          initial: false
+        })
+        if (overwrite) {
+          await fs.writeFile(tailwindPath, TAILWIND_CONFIG_TEMPLATE)
+          log(pc.green(`✅ Updated ${templateConfig.tailwindConfigPath}`), options)
+        }
       }
     } else {
       await fs.writeFile(tailwindPath, TAILWIND_CONFIG_TEMPLATE)
-      console.log(pc.green(`✅ Created ${templateConfig.tailwindConfigPath}`))
+      log(pc.green(`✅ Created ${templateConfig.tailwindConfigPath}`), options)
     }
   }
 
-  // Ask to install dependencies
-  const { installDeps } = await prompts({
-    type: "confirm",
-    name: "installDeps",
-    message: "Install base dependencies (tailwindcss, autoprefixer, postcss)?",
-    initial: true
-  })
+  // Ask to install dependencies (skip if --yes)
+  let installDeps = options.yes
+  if (!options.yes) {
+    const { confirm } = await prompts({
+      type: "confirm",
+      name: "confirm",
+      message: "Install base dependencies (tailwindcss, autoprefixer, postcss)?",
+      initial: true
+    })
+    installDeps = confirm
+  }
 
   if (installDeps) {
-    console.log() // Empty line
+    log("", options)
     const baseDeps = ["tailwindcss", "autoprefixer", "postcss"]
     installDependencies(baseDeps, { dev: true })
 
     // Install framework peer dependency
-    console.log() // Empty line
+    log("", options)
     const frameworkPkg = framework === "vue" ? "@hemia/lume-vue" : `@hemia/lume-${framework}`
-    console.log(pc.cyan(`📦 Installing ${frameworkPkg}...`))
-    console.log(pc.dim(`   When published, run: npm install ${frameworkPkg}`))
+    info(`📦 Installing ${frameworkPkg}...`, options)
+    log(pc.dim(`   When published, run: npm install ${frameworkPkg}`), options)
   }
 
-  console.log()
-  console.log(pc.green("🎉 All done! Run the following to add components:"))
-  console.log(pc.cyan(`   hemia add button`))
-  console.log()
+  log("", options)
+  log(pc.green("🎉 All done! Run the following to add components:"), options)
+  info(`   lume add button`, options)
+  log("", options)
 }
