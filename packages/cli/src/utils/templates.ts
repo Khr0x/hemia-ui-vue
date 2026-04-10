@@ -27,69 +27,76 @@ export const GLOBALS_CSS_TEMPLATE_VUETIFY = `@layer vuetify;
   --color-lume-destructive: var(--lume-destructive);
   --color-lume-destructive-foreground: var(--lume-destructive-foreground);
 
+  --radius-sm: var(--lume-radius-sm);
+  --radius-md: var(--lume-radius-md);
+  --radius-lg: var(--lume-radius-lg);
+  --radius-xl: calc(var(--lume-radius) * 1.5);
+  --radius-2xl: calc(var(--lume-radius) * 2);
+  --radius-3xl: calc(var(--lume-radius) * 2.6);
+}
+
+:root {
   --lume-radius-sm: 0.375rem;
   --lume-radius-md: 0.5rem;
   --lume-radius-lg: 0.75rem;
   --lume-radius: 0.625rem;
-}
 
-:root {
-  --lume-primary: 222.2 47.4% 11.2%;
-  --lume-primary-foreground: 210 40% 98%;
+  --lume-primary: hsl(222.2 47.4% 11.2%);
+  --lume-primary-foreground: hsl(210 40% 98%);
 
-  --lume-secondary: 210 40% 96.1%;
-  --lume-secondary-foreground: 222.2 47.4% 11.2%;
+  --lume-secondary: hsl(210 40% 96.1%);
+  --lume-secondary-foreground: hsl(222.2 47.4% 11.2%);
 
-  --lume-destructive: 0 84.2% 60.2%;
-  --lume-destructive-foreground: 210 40% 98%;
+  --lume-destructive: hsl(0 84.2% 60.2%);
+  --lume-destructive-foreground: hsl(210 40% 98%);
 
-  --lume-muted: 210 40% 96.1%;
-  --lume-muted-foreground: 215.4 16.3% 46.9%;
+  --lume-muted: hsl(210 40% 96.1%);
+  --lume-muted-foreground: hsl(215.4 16.3% 46.9%);
 
-  --lume-accent: 210 40% 96.1%;
-  --lume-accent-foreground: 222.2 47.4% 11.2%;
+  --lume-accent: hsl(210 40% 96.1%);
+  --lume-accent-foreground: hsl(222.2 47.4% 11.2%);
 
-  --lume-border: 214.3 31.8% 91.4%;
-  --lume-input: 214.3 31.8% 91.4%;
-  --lume-ring: 210 5% 80% / 30%;
+  --lume-border: hsl(214.3 31.8% 91.4%);
+  --lume-input: hsl(214.3 31.8% 91.4%);
+  --lume-ring: hsl(210 5% 80% / 30%);
 
-  --lume-background: 0 0% 100%;
-  --lume-foreground: 222.2 47.4% 11.2%;
+  --lume-background: hsl(0 0% 100%);
+  --lume-foreground: hsl(222.2 47.4% 11.2%);
 
-  --lume-card: 0 0% 100%;
-  --lume-card-foreground: 222.2 47.4% 11.2%;
+  --lume-card: hsl(0 0% 100%);
+  --lume-card-foreground: hsl(222.2 47.4% 11.2%);
 }
 
 [data-theme="dark"] {
-  --lume-primary: 210 40% 98%;
-  --lume-primary-foreground: 222.2 47.4% 11.2%;
+  --lume-primary: hsl(210 40% 98%);
+  --lume-primary-foreground: hsl(222.2 47.4% 11.2%);
 
-  --lume-secondary: 217.2 32.6% 17.5%;
-  --lume-secondary-foreground: 210 40% 98%;
+  --lume-secondary: hsl(217.2 32.6% 17.5%);
+  --lume-secondary-foreground: hsl(210 40% 98%);
 
-  --lume-destructive: 0 62.8% 30.6%;
-  --lume-destructive-foreground: 210 40% 98%;
+  --lume-destructive: hsl(0 62.8% 30.6%);
+  --lume-destructive-foreground: hsl(210 40% 98%);
 
-  --lume-muted: 217.2 32.6% 17.5%;
-  --lume-muted-foreground: 215 20.2% 65.1%;
+  --lume-muted: hsl(217.2 32.6% 17.5%);
+  --lume-muted-foreground: hsl(215 20.2% 65.1%);
 
-  --lume-accent: 217.2 32.6% 17.5%;
-  --lume-accent-foreground: 210 40% 98%;
+  --lume-accent: hsl(217.2 32.6% 17.5%);
+  --lume-accent-foreground: hsl(210 40% 98%);
 
-  --lume-border: 217.2 32.6% 17.5%;
-  --lume-input: 217.2 32.6% 17.5%;
-  --lume-ring: 217.2 32.6% 50% / 30%;
+  --lume-border: hsl(217.2 32.6% 17.5%);
+  --lume-input: hsl(217.2 32.6% 17.5%);
+  --lume-ring: hsl(217.2 32.6% 50% / 30%);
 
-  --lume-background: 222.2 84% 4.9%;
-  --lume-foreground: 210 40% 98%;
+  --lume-background: hsl(222.2 84% 4.9%);
+  --lume-foreground: hsl(210 40% 98%);
 
-  --lume-card: 222.2 84% 4.9%;
-  --lume-card-foreground: 210 40% 98%;
+  --lume-card: hsl(222.2 84% 4.9%);
+  --lume-card-foreground: hsl(210 40% 98%);
 }
 
 @layer base {
   * {
-    border-color: hsl(var(--lume-border));
+    border-color: var(--lume-border);
   }
 
   html,
@@ -99,7 +106,7 @@ export const GLOBALS_CSS_TEMPLATE_VUETIFY = `@layer vuetify;
   }
 
   body {
-    background-color: hsl(var(--lume-background));
+    background-color: var(--lume-background);
   }
 }
 
@@ -134,69 +141,76 @@ export const GLOBALS_CSS_TEMPLATE = `@import "tailwindcss";
   --color-lume-destructive: var(--lume-destructive);
   --color-lume-destructive-foreground: var(--lume-destructive-foreground);
 
+  --radius-sm: var(--lume-radius-sm);
+  --radius-md: var(--lume-radius-md);
+  --radius-lg: var(--lume-radius-lg);
+  --radius-xl: calc(var(--lume-radius) * 1.5);
+  --radius-2xl: calc(var(--lume-radius) * 2);
+  --radius-3xl: calc(var(--lume-radius) * 2.6);
+}
+
+:root {
   --lume-radius-sm: 0.375rem;
   --lume-radius-md: 0.5rem;
   --lume-radius-lg: 0.75rem;
   --lume-radius: 0.625rem;
-}
 
-:root {
-  --lume-primary: 222.2 47.4% 11.2%;
-  --lume-primary-foreground: 210 40% 98%;
+  --lume-primary: hsl(222.2 47.4% 11.2%);
+  --lume-primary-foreground: hsl(210 40% 98%);
 
-  --lume-secondary: 210 40% 96.1%;
-  --lume-secondary-foreground: 222.2 47.4% 11.2%;
+  --lume-secondary: hsl(210 40% 96.1%);
+  --lume-secondary-foreground: hsl(222.2 47.4% 11.2%);
 
-  --lume-destructive: 0 84.2% 60.2%;
-  --lume-destructive-foreground: 210 40% 98%;
+  --lume-destructive: hsl(0 84.2% 60.2%);
+  --lume-destructive-foreground: hsl(210 40% 98%);
 
-  --lume-muted: 210 40% 96.1%;
-  --lume-muted-foreground: 215.4 16.3% 46.9%;
+  --lume-muted: hsl(210 40% 96.1%);
+  --lume-muted-foreground: hsl(215.4 16.3% 46.9%);
 
-  --lume-accent: 210 40% 96.1%;
-  --lume-accent-foreground: 222.2 47.4% 11.2%;
+  --lume-accent: hsl(210 40% 96.1%);
+  --lume-accent-foreground: hsl(222.2 47.4% 11.2%);
 
-  --lume-border: 214.3 31.8% 91.4%;
-  --lume-input: 214.3 31.8% 91.4%;
-  --lume-ring: 210 5% 80% / 30%;
+  --lume-border: hsl(214.3 31.8% 91.4%);
+  --lume-input: hsl(214.3 31.8% 91.4%);
+  --lume-ring: hsl(210 5% 80% / 30%);
 
-  --lume-background: 0 0% 100%;
-  --lume-foreground: 222.2 47.4% 11.2%;
+  --lume-background: hsl(0 0% 100%);
+  --lume-foreground: hsl(222.2 47.4% 11.2%);
 
-  --lume-card: 0 0% 100%;
-  --lume-card-foreground: 222.2 47.4% 11.2%;
+  --lume-card: hsl(0 0% 100%);
+  --lume-card-foreground: hsl(222.2 47.4% 11.2%);
 }
 
 [data-theme="dark"] {
-  --lume-primary: 210 40% 98%;
-  --lume-primary-foreground: 222.2 47.4% 11.2%;
+  --lume-primary: hsl(210 40% 98%);
+  --lume-primary-foreground: hsl(222.2 47.4% 11.2%);
 
-  --lume-secondary: 217.2 32.6% 17.5%;
-  --lume-secondary-foreground: 210 40% 98%;
+  --lume-secondary: hsl(217.2 32.6% 17.5%);
+  --lume-secondary-foreground: hsl(210 40% 98%);
 
-  --lume-destructive: 0 62.8% 30.6%;
-  --lume-destructive-foreground: 210 40% 98%;
+  --lume-destructive: hsl(0 62.8% 30.6%);
+  --lume-destructive-foreground: hsl(210 40% 98%);
 
-  --lume-muted: 217.2 32.6% 17.5%;
-  --lume-muted-foreground: 215 20.2% 65.1%;
+  --lume-muted: hsl(217.2 32.6% 17.5%);
+  --lume-muted-foreground: hsl(215 20.2% 65.1%);
 
-  --lume-accent: 217.2 32.6% 17.5%;
-  --lume-accent-foreground: 210 40% 98%;
+  --lume-accent: hsl(217.2 32.6% 17.5%);
+  --lume-accent-foreground: hsl(210 40% 98%);
 
-  --lume-border: 217.2 32.6% 17.5%;
-  --lume-input: 217.2 32.6% 17.5%;
-  --lume-ring: 217.2 32.6% 50% / 30%;
+  --lume-border: hsl(217.2 32.6% 17.5%);
+  --lume-input: hsl(217.2 32.6% 17.5%);
+  --lume-ring: hsl(217.2 32.6% 50% / 30%);
 
-  --lume-background: 222.2 84% 4.9%;
-  --lume-foreground: 210 40% 98%;
+  --lume-background: hsl(222.2 84% 4.9%);
+  --lume-foreground: hsl(210 40% 98%);
 
-  --lume-card: 222.2 84% 4.9%;
-  --lume-card-foreground: 210 40% 98%;
+  --lume-card: hsl(222.2 84% 4.9%);
+  --lume-card-foreground: hsl(210 40% 98%);
 }
 
 @layer base {
   * {
-    border-color: hsl(var(--lume-border));
+    border-color: var(--lume-border);
   }
 
   html,
@@ -206,7 +220,7 @@ export const GLOBALS_CSS_TEMPLATE = `@import "tailwindcss";
   }
 
   body {
-    background-color: hsl(var(--lume-background));
+    background-color: var(--lume-background);
   }
 }
 

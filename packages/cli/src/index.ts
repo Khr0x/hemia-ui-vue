@@ -53,7 +53,7 @@ program
 
 program
   .command("add-styles")
-  .description("add globals.css and tailwind.config.ts with merge support")
+  .description("add globals.css with Tailwind v4 support")
   .option("-y, --yes", "skip confirmation prompt. (default: false)")
   .option("-o, --overwrite", "overwrite existing files. (default: false)")
   .option("-f, --force", "force overwrite without asking. (default: false)")

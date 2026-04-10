@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority"
 import { cn } from "@hemia/lume-vue"
 
 const fieldGroupVariants = cva(
-  "flex flex-wrap items-center gap-2 has-[input:focus]:rounded-lg has-[input:focus]:border-lume-ring has-[input:focus]:ring-3 has-[input:focus]:ring-lume-ring/50"
+  "flex flex-wrap items-center gap-2"
 )
 
 const props = defineProps<{

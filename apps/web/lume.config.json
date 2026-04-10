@@ -1,14 +1,14 @@
 {
   "framework": "vue",
-  "style": "default",
+  "packageManager": "npm",
+  "style": "css-variables",
   "template": "vite-vue",
   "tailwind": {
-    "config": "tailwind.config.ts",
     "css": "src/assets/globals.css",
     "prefix": ""
   },
   "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils"
+    "components": "@/src/components",
+    "utils": "@/src/lib/utils"
   }
 }

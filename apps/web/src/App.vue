@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import { useRouter, useRoute } from 'vue-router'
 import PlaygroundHeader from "@/components/playground/PlaygroundHeader.vue"
 import PlaygroundSidebar from "@/components/playground/PlaygroundSidebar.vue"
@@ -11,9 +11,24 @@ const route = useRoute()
 const isDark = ref(false)
 const sidebarOpen = ref(false)
 
+// Initialize dark mode from localStorage
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme')
+  if (savedTheme === 'dark') {
+    isDark.value = true
+    document.documentElement.setAttribute('data-theme', 'dark')
+  }
+})
+
 const toggleDarkMode = () => {
   isDark.value = !isDark.value
-  document.documentElement.classList.toggle("dark")
+  if (isDark.value) {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    localStorage.setItem('theme', 'dark')
+  } else {
+    document.documentElement.removeAttribute('data-theme')
+    localStorage.removeItem('theme')
+  }
 }
 
 const navSections: NavSection[] = [

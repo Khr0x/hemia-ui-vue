@@ -2,7 +2,7 @@
 import { cva } from "class-variance-authority"
 import { cn } from "@hemia/lume-vue"
 
-const fieldSeparatorVariants = cva("h-px bg-border")
+const fieldSeparatorVariants = cva("h-px bg-lume-border")
 
 const props = defineProps<{
   class?: string

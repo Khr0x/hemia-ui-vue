@@ -49,15 +49,17 @@ function extractCssVariablesFromBlock(content: string): Map<string, string> {
 
 /**
  * Extract a CSS section (like @theme, :root, [data-theme="dark"])
+ * Note: @theme can be with or without "inline" keyword
  */
 function extractCssSection(cssContent: string, selectorPattern: string): {
   content: string | null
   fullMatch: string | null
 } {
   let regex: RegExp
-  
+
   if (selectorPattern === '@theme') {
-    regex = /@theme\s*\{([\s\S]*?)\n\}/
+    // Match @theme with or without inline: @theme { or @theme inline {
+    regex = /@theme\s+inline\s*\{([\s\S]*?)\n\}|@theme\s*\{([\s\S]*?)\n\}/
   } else if (selectorPattern === ':root') {
     regex = /:root\s*\{([\s\S]*?)\n\}/
   } else if (selectorPattern === '[data-theme="dark"]') {
@@ -65,15 +67,17 @@ function extractCssSection(cssContent: string, selectorPattern: string): {
   } else {
     return { content: null, fullMatch: null }
   }
-  
+
   const match = cssContent.match(regex)
   if (match) {
+    // If @theme has inline, it's match[1], otherwise match[2]
+    const content = match[1] || match[2]
     return {
-      content: match[1],
+      content: content,
       fullMatch: match[0]
     }
   }
-  
+
   return { content: null, fullMatch: null }
 }
 
@@ -95,15 +99,76 @@ function mergeSectionVariables(
 }
 
 /**
+ * Wrap HSL values without hsl() wrapper
+ * HSL format: "210 40% 98%" or "210 5% 80% / 30%" (with opacity)
+ */
+function wrapHslValue(value: string): string {
+  // If already wrapped, return as-is
+  if (value.startsWith('hsl(') || value.startsWith('oklch(') || value.startsWith('lab(')) {
+    return value
+  }
+
+  // Match HSL values: "210 40% 98%" or "210 5% 80% / 30%"
+  // hsl(hue lightness saturation) or hsl(hue lightness saturation / alpha)
+  const hslRegex = /^(\d+\.?\d*)\s+(\d+\.?\d*%)\s+(\d+\.?\d*%)(\s*\/\s*\d+\.?\d*%)?$/i
+
+  if (hslRegex.test(value.trim())) {
+    return `hsl(${value.trim()})`
+  }
+
+  // Try with simpler pattern: starts with a number and contains %
+  const simpleRegex = /^(\d+\.?\d*)\s+\d+\.?\d*%/
+
+  if (simpleRegex.test(value.trim()) && value.includes('%')) {
+    return `hsl(${value.trim()})`
+  }
+
+  return value
+}
+
+/**
  * Format CSS variables into a block
  */
 function formatCssBlock(selector: string, vars: Map<string, string>): string {
   const indent = '  '
   const varLines = Array.from(vars.entries())
-    .map(([key, value]) => `${indent}--${key}: ${value};`)
+    .map(([key, value]) => {
+      const wrappedValue = wrapHslValue(value)
+      return `${indent}--${key}: ${wrappedValue};`
+    })
     .join('\n')
-  
+
+  // For @theme, always use inline variant
+  if (selector === '@theme') {
+    return `@theme inline {\n${varLines}\n}`
+  }
+
   return `${selector} {\n${varLines}\n}`
+}
+
+/**
+ * Add Vuetify declarations to CSS (for merge mode when user selects Vuetify)
+ */
+function addVuetifyDeclarations(cssContent: string): string {
+  const vuetifyDeclarations = `@layer vuetify;\n@import "tailwindcss";\n@import "vuetify/styles" layer(vuetify);`
+
+  // Check if already has @layer vuetety
+  if (cssContent.includes('@layer vuetify')) {
+    return cssContent
+  }
+
+  // Check if already has @import "vuetify/styles" layer(vuetify)
+  if (cssContent.includes('@import "vuetify/styles"')) {
+    return cssContent
+  }
+
+  // Remove existing @import "tailwindcss" since we'll add it in the vuetify block
+  let cleanContent = cssContent.replace(/@import\s+"tailwindcss"\s*;?\n?/g, '')
+
+  // Trim leading whitespace
+  cleanContent = cleanContent.replace(/^\n+/, '')
+
+  return `${vuetifyDeclarations}\n\n${cleanContent}`
 }
 
 /**
@@ -157,8 +222,8 @@ function mergeCssVariables(existingCss: string, templateCss: string): string {
       const newBlock = formatCssBlock(':root', mergedVars)
       result = result.replace(existingRoot.fullMatch, newBlock)
     } else {
-      // Add :root section after @theme
-      const themeMatch = result.match(/@theme\s*\{[\s\S]*?\n\}/)
+      // Add :root section after @theme (with or without inline)
+      const themeMatch = result.match(/@theme(?:\s+inline)?\s*\{[\s\S]*?\n\}/)
       if (themeMatch) {
         const newBlock = formatCssBlock(':root', templateRootVars)
         result = result.replace(
@@ -352,7 +417,13 @@ Options:
       await fs.writeFile(cssPath, cssTemplate)
       log(pc.green(`✅ Overwrote ${configPaths.globalsCssPath}`), options)
     } else if (shouldMerge) {
-      const existingCss = await fs.readFile(cssPath, "utf-8")
+      let existingCss = await fs.readFile(cssPath, "utf-8")
+
+      // Add Vuetify declarations if user selected Vuetify
+      if (useVuetify) {
+        existingCss = addVuetifyDeclarations(existingCss)
+      }
+
       const mergedCss = mergeCssVariables(existingCss, cssTemplate)
       await fs.writeFile(cssPath, mergedCss)
       log(pc.green(`✅ Merged CSS variables in ${configPaths.globalsCssPath}`), options)

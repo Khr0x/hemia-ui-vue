@@ -1,109 +1,107 @@
-@tailwind base;
-@tailwind components;
+@import "tailwindcss";
 @tailwind utilities;
+/* @source "../../../../packages/registry/registry/vue*.vue"; */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --color-lume-border: var(--lume-border);
+  --color-lume-background: var(--lume-background);
+  --color-lume-foreground: var(--lume-foreground);
+  --color-lume-primary: var(--lume-primary);
+  --color-lume-primary-foreground: var(--lume-primary-foreground);
+  --color-lume-secondary: var(--lume-secondary);
+  --color-lume-secondary-foreground: var(--lume-secondary-foreground);
+  --color-lume-muted: var(--lume-muted);
+  --color-lume-muted-foreground: var(--lume-muted-foreground);
+  --color-lume-accent: var(--lume-accent);
+  --color-lume-accent-foreground: var(--lume-accent-foreground);
+  --color-lume-card: var(--lume-card);
+  --color-lume-card-foreground: var(--lume-card-foreground);
+  --color-lume-input: var(--lume-input);
+  --color-lume-ring: var(--lume-ring);
+  --color-lume-destructive: var(--lume-destructive);
+  --color-lume-destructive-foreground: var(--lume-destructive-foreground);
+
+  --radius-sm: var(--lume-radius-sm);
+  --radius-md: var(--lume-radius-md);
+  --radius-lg: var(--lume-radius-lg);
+  --radius-xl: calc(var(--lume-radius) * 1.5);
+  --radius-2xl: calc(var(--lume-radius) * 2);
+  --radius-3xl: calc(var(--lume-radius) * 2.6);
+}
+
+:root {
+  --lume-radius-sm: 0.375rem;
+  --lume-radius-md: 0.5rem;
+  --lume-radius-lg: 0.75rem;
+  --lume-radius: 0.625rem;
+
+  --lume-primary: hsl(222.2 47.4% 11.2%);
+  --lume-primary-foreground: hsl(210 40% 98%);
+
+  --lume-secondary: hsl(210 40% 96.1%);
+  --lume-secondary-foreground: hsl(222.2 47.4% 11.2%);
+
+  --lume-destructive: hsl(0 84.2% 60.2%);
+  --lume-destructive-foreground: hsl(210 40% 98%);
+
+  --lume-muted: hsl(210 40% 96.1%);
+  --lume-muted-foreground: hsl(215.4 16.3% 46.9%);
+
+  --lume-accent: hsl(210 40% 96.1%);
+  --lume-accent-foreground: hsl(222.2 47.4% 11.2%);
+
+  --lume-border: hsl(214.3 31.8% 91.4%);
+  --lume-input: hsl(214.3 31.8% 91.4%);
+  --lume-ring: hsl(210 5% 80% / 30%);
+
+  --lume-background: hsl(0 0% 100%);
+  --lume-foreground: hsl(222.2 47.4% 11.2%);
+
+  --lume-card: hsl(0 0% 100%);
+  --lume-card-foreground: hsl(222.2 47.4% 11.2%);
+}
+
+[data-theme="dark"] {
+  --lume-primary: hsl(210 40% 98%);
+  --lume-primary-foreground: hsl(222.2 47.4% 11.2%);
+
+  --lume-secondary: hsl(217.2 32.6% 17.5%);
+  --lume-secondary-foreground: hsl(210 40% 98%);
+
+  --lume-destructive: hsl(0 62.8% 30.6%);
+  --lume-destructive-foreground: hsl(210 40% 98%);
+
+  --lume-muted: hsl(217.2 32.6% 17.5%);
+  --lume-muted-foreground: hsl(215 20.2% 65.1%);
+
+  --lume-accent: hsl(217.2 32.6% 17.5%);
+  --lume-accent-foreground: hsl(210 40% 98%);
+
+  --lume-border: hsl(217.2 32.6% 17.5%);
+  --lume-input: hsl(217.2 32.6% 17.5%);
+  --lume-ring: hsl(217.2 32.6% 50% / 30%);
+
+  --lume-background: hsl(222.2 84% 4.9%);
+  --lume-foreground: hsl(210 40% 98%);
+
+  --lume-card: hsl(222.2 84% 4.9%);
+  --lume-card-foreground: hsl(210 40% 98%);
+}
 
 @layer base {
-  :root {
-    --lume-background: 0 0% 100%;
-    --lume-foreground: 222.2 84% 4.9%;
-
-    --lume-card: 0 0% 100%;
-    --lume-card-foreground: 222.2 84% 4.9%;
-
-    --lume-popover: 0 0% 100%;
-    --lume-popover-foreground: 222.2 84% 4.9%;
-
-    --lume-primary: 222.2 47.4% 11.2%;
-    --lume-primary-foreground: 210 40% 98%;
-
-    --lume-secondary: 210 40% 96.1%;
-    --lume-secondary-foreground: 222.2 47.4% 11.2%;
-
-    --lume-muted: 210 40% 96.1%;
-    --lume-muted-foreground: 215.4 16.3% 46.9%;
-
-    --lume-accent: 210 40% 96.1%;
-    --lume-accent-foreground: 222.2 47.4% 11.2%;
-
-    --lume-destructive: 0 84.2% 60.2%;
-    --lume-destructive-foreground: 210 40% 98%;
-
-    --lume-border: 214.3 31.8% 91.4%;
-    --lume-input: 214.3 31.8% 91.4%;
-    --lume-ring: 210 5% 80% / 30%;
-
-    --lume-sidebar: 0 0% 100%;
-    --lume-sidebar-foreground: 222.2 84% 4.9%;
-    --lume-sidebar-primary: 222.2 47.4% 11.2%;
-    --lume-sidebar-primary-foreground: 210 40% 98%;
-    --lume-sidebar-accent: 210 40% 96.1%;
-    --lume-sidebar-accent-foreground: 222.2 47.4% 11.2%;
-    --lume-sidebar-border: 214.3 31.8% 91.4%;
-    --lume-sidebar-ring: oklch(0.708 0 0);
-
-    --lume-surface: 210 40% 97.5%;
-    --lume-code-highlight: 210 40% 95.5%;
-    --lume-code-number: 215.4 16.3% 46.9%;
-    --lume-selection: 222.2 84% 4.9%;
-    --lume-selection-foreground: 0 0% 100%;
-
-    --lume-radius-sm: 0.5rem;
-    --lume-radius-md: 0.75rem;
-    --lume-radius-lg: 1rem;
-    --lume-radius: 0.625rem;
-
-    --lume-spacing: 0.25rem;
-  }
-
-  .dark {
-    --lume-background: 222.2 84% 4.9%;
-    --lume-foreground: 210 40% 98%;
-
-    --lume-card: 222.2 84% 4.9%;
-    --lume-card-foreground: 210 40% 98%;
-
-    --lume-popover: 222.2 84% 4.9%;
-    --lume-popover-foreground: 210 40% 98%;
-
-    --lume-primary: 210 40% 98%;
-    --lume-primary-foreground: 222.2 47.4% 11.2%;
-
-    --lume-secondary: 217.2 32.6% 17.5%;
-    --lume-secondary-foreground: 210 40% 98%;
-
-    --lume-muted: 217.2 32.6% 17.5%;
-    --lume-muted-foreground: 215 20.2% 65.1%;
-
-    --lume-accent: 217.2 32.6% 17.5%;
-    --lume-accent-foreground: 210 40% 98%;
-
-    --lume-destructive: 0 62.8% 30.6%;
-    --lume-destructive-foreground: 210 40% 98%;
-
-    --lume-border: 217.2 32.6% 17.5%;
-    --lume-input: 217.2 32.6% 17.5%;
-    --lume-ring: 217.2 32.6% 50% / 30%;
-
-    --lume-sidebar: 222.2 84% 4.9%;
-    --lume-sidebar-foreground: 210 40% 98%;
-    --lume-sidebar-primary: 210 40% 98%;
-    --lume-sidebar-primary-foreground: 222.2 47.4% 11.2%;
-    --lume-sidebar-accent: 217.2 32.6% 17.5%;
-    --lume-sidebar-accent-foreground: 210 40% 98%;
-    --lume-sidebar-border: 217.2 32.6% 17.5%;
-    --lume-sidebar-ring: 212.7 26.8% 83.9%;
-  }
-
   * {
-    border-color: hsl(var(--lume-border));
+    border-color: var(--lume-border);
+  }
+
+  html,
+  body,
+  #app {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
   }
 
   body {
-    background-color: hsl(var(--lume-background));
-    color: hsl(var(--lume-foreground));
-    font-feature-settings: "rlig" 1, "calt" 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--lume-background);
   }
 }
 
@@ -113,21 +111,3 @@
   }
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--lume-border));
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--lume-muted-foreground) / 0.3);
-}

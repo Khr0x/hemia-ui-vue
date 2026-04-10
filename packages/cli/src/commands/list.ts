@@ -9,7 +9,7 @@ const require = createRequire(import.meta.url)
 function getFrameworkFromConfig(): string {
   try {
     const config = fs.readJsonSync(
-      path.resolve(process.cwd(), "hemia.config.json")
+      path.resolve(process.cwd(), "lume.config.json")
     )
     return config.framework ?? "vue"
   } catch {
