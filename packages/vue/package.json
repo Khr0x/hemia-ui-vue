@@ -1,6 +1,6 @@
 {
   "name": "@hemia/lume-vue",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -19,7 +19,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@hemia/lume-core": "^0.0.2"
+    "@hemia/lume-core": "^0.0.3"
   },
   "publishConfig": {
     "access": "public"

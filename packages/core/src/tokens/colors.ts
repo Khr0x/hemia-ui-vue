@@ -1,7 +1,7 @@
 export const colors = {
-  primary: "hsl(var(--primary))",
-  secondary: "hsl(var(--secondary))",
-  destructive: "hsl(var(--destructive))",
-  muted: "hsl(var(--muted))",
-  accent: "hsl(var(--accent))",
+  primary: "var(--lume-primary)",
+  secondary: "var(--lume-secondary)",
+  destructive: "var(--lume-destructive)",
+  muted: "var(--lume-muted)",
+  accent: "var(--lume-accent)",
 }

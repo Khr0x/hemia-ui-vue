@@ -64,11 +64,11 @@ importers:
   packages/cli:
     dependencies:
       '@hemia/lume-core':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
       '@hemia/lume-registry':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
       commander:
         specifier: ^12.0.0
         version: 12.1.0
@@ -132,8 +132,8 @@ importers:
   packages/vue:
     dependencies:
       '@hemia/lume-core':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
     devDependencies:
       '@types/node':
         specifier: ^22.0.0
@@ -569,11 +569,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@hemia/lume-core@0.0.2':
-    resolution: {integrity: sha512-lLY4so12Mr8Q+bSe+A4SAUD0yiR2pYiuLqnEUAEt0pPOz2IbXJglkoLrbappFaWRvEyuVEN3t9zHONbw/LE5HA==}
+  '@hemia/lume-core@0.0.3':
+    resolution: {integrity: sha512-+jsnhZKyYPUK1wZl9flsh293cjNIl/hlIoeHaOGlq/mTusKeGtVW74EFOcaTd8PnWL25ypNWUX4HyTb7IdSNsA==}
 
-  '@hemia/lume-registry@0.0.2':
-    resolution: {integrity: sha512-e9+FeDwjgXmH4BWRYS89Jr5I3DLeFTzX8g0ZeVSzdLikOUGlxSraEWwYt8XJYRrqIU9TjEcu1x1iMYq2x0VWMA==}
+  '@hemia/lume-registry@0.0.3':
+    resolution: {integrity: sha512-HE17TimCVlmoBcYwr5ZpqToJnQ188IuS26tOOiawNZFV6YI0jPa3eXLAjPABdHD/Zil/GBZPuDznALArbbUGgA==}
 
   '@iconify-json/simple-icons@1.2.77':
     resolution: {integrity: sha512-oaENvo6C3BkAEWMlcQA3XemxU9v2SFOTlApSUCODAkIu1haeLCjzrmH3HgmGqjRnJjM+LevO8sA+MgdMHBFBDA==}
@@ -2173,13 +2173,13 @@ snapshots:
   '@esbuild/win32-x64@0.27.7':
     optional: true
 
-  '@hemia/lume-core@0.0.2':
+  '@hemia/lume-core@0.0.3':
     dependencies:
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       tailwind-merge: 2.6.1
 
-  '@hemia/lume-registry@0.0.2': {}
+  '@hemia/lume-registry@0.0.3': {}
 
   '@iconify-json/simple-icons@1.2.77':
     dependencies:
